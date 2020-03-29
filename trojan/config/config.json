@@ -5,8 +5,7 @@
     "remote_addr": "__DOCKER_CADDY__",
     "remote_port": 80,
     "password": [
-        "rUZz1X",
-        "F>ZfQM"
+        "your_password"
     ],
     "log_level": 1,
     "ssl": {
