@@ -1,0 +1,48 @@
+{
+  "inbounds": [
+    {
+      "port": 13389,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "a2e56774-1111-1111-1111-1ac984ccdda6",
+            "level": 1,
+            "alterId": 64
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/_ohmysocket",
+          "headers": {
+            "Host": "limbo.update.microsoft.com"
+          }
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}

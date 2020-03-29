@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  trojan:
+      image: trojangfw/trojan:latest
+      ports:
+        - "443:443"
+      restart: always
+      volumes:
+        - ./trojan/config:/config
+        - ./ssl:/ssl
+        - ./trojan/wait_for_caddy.sh:/wait_for_caddy.sh
+      command:
+        - /bin/sh
+        - /wait_for_caddy.sh
+        - trojan
+        - config.json
+      links:
+        - caddy:__DOCKER_CADDY__
+      depends_on: 
+        - caddy
+
+  v2ray:
+      image: v2ray/official:latest
+      restart: always
+      volumes:
+        - ./v2ray/config:/etc/v2ray
+
+  caddy:
+      image: abiosoft/caddy
+      ports:
+        - "3389:3389"
+        - "80:80"
+      restart: always
+      volumes:
+        - ./wwwroot:/usr/src
+        - ./caddy/Caddyfile:/etc/Caddyfile
+        - ./ssl:/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites
+      links:
+        - v2ray:__DOCKER_V2RAY__
+      depends_on: 
+        - v2ray

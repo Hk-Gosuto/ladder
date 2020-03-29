@@ -1,0 +1,29 @@
+example.com:80 {
+    root /usr/src/html
+    log /usr/src/caddy.log
+    index index.html
+}
+
+example.com:443 {
+    root /usr/src/html
+    log /usr/src/caddy.log
+    index index.html
+}
+
+example.com:3389 {
+    root /usr/src/html
+    log /usr/src/caddy.log
+    index index.html
+}
+
+limbo.update.microsoft.com:3389 {
+	tls /usr/src/ssl/ssl.crt /usr/src/ssl/ssl.key
+    root /usr/src/html
+    log /usr/src/caddy.log
+	index index.html
+	proxy /_ohmysocket __DOCKER_V2RAY__:13389 {
+		insecure_skip_verify
+		websocket
+		header_upstream -Origin
+  }
+}
